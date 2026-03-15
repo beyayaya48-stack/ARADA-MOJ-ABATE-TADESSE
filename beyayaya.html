@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>beyayaya · የስድስት ወር ሪፖርት</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .pill-1 { background: #dbeafe; color: #1e40af; }
+    .pill-2 { background: #fee2e2; color: #991b1b; }
+    .pill-3 { background: #f3e8ff; color: #6b21a8; }
+    .pill-4 { background: #d1fae5; color: #065f46; }
+    .pill-5 { background: #fed7aa; color: #92400e; }
+    .level-tag { font-size: 0.6rem; background: #e5e7eb; padding: 0.2rem 0.7rem; border-radius: 30px; font-weight: 600; }
+    .resp-badge { background: #f1f5f9; border-left: 3px solid #3b82f6; padding: 0.2rem 0.6rem; border-radius: 0 30px 30px 0; font-size: 0.7rem; font-weight: 600; }
+    .kpi-box { background: rgba(99, 102, 241, 0.06); border-radius: 16px; padding: 0.7rem; font-size: 0.9rem; border-left: 4px solid rgba(99, 102, 241, 0.8); box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08); }
+    .timeline-box { background: rgba(16, 185, 129, 0.06); border-radius: 16px; padding: 0.7rem; font-size: 0.9rem; border-left: 4px solid rgba(16, 185, 129, 0.8); box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08); }
+    .nav-active { background-color: #3b82f6 !important; color: white !important; }
+    .progress-indicator { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
+  </style>
+</head>
+<body class="bg-white p-4 font-sans text-slate-900">
+
+<div class="max-w-7xl mx-auto" id="app">
+  <!-- Navigation by ፈፃሚ አካል -->
+  <div class="bg-white/80 backdrop-blur-sm p-3 rounded-2xl shadow-md mb-6 flex flex-wrap justify-center gap-3 sticky top-2 z-20 ring-1 ring-slate-200/50">
+    <a href="#home" class="nav-btn px-5 py-2 rounded-full bg-gray-200 hover:bg-gray-300 font-medium text-sm transition">🏠 ዋና ገጽ</a>
+  </div>
+
+  <!-- dynamic content -->
+  <div id="page-content" class="bg-white backdrop-blur-sm p-5 rounded-3xl shadow-xl min-h-[70vh] transition ring-1 ring-slate-200/30">
+    <!-- filled by js -->
+  </div>
+  
+  <div class="text-xs text-gray-400 text-center mt-4">
+    <span class="inline-flex items-center gap-2">
+      <span class="w-2 h-2 bg-green-500 rounded-full"></span> ተጠናቋል · 
+      <span class="w-2 h-2 bg-blue-500 rounded-full"></span> እየተከናወነ ነው · 
+      <span class="w-2 h-2 bg-yellow-500 rounded-full"></span> ያልተጀመረ
+    </span>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // =========================================================================
+    // COMPLETE DATASET WITH ALL PILLARS (1-5) - date ranges removed from display
+    // =========================================================================
+    const allTasks = [
+      // ==================== PILLAR 1 ====================
+      { pillar: { name: "ምሰላዊት 1 – የተሻሻለ የፍትሕ አገልግሎት", weight: "8%" },
+        goal: { name: "ግብ 1.1 ያደገ የፍትሕ አገልግሎት ጥራት፣ ተደራሽነትና አካታችነት", weight: "8%" },
+        closeResult: { name: "የተሻሻለ የአገልግሎት ጥራት", weight: "5" },
+        mainTask: "ለተገልጋዮች የሚሰጡ አገልግሎቶች በስታንዳርዱ መሠረት 90% የፈጣን ምላሽ መስጠት",
+        detailedTasks: [
+          "የዜጎች ቻርተር ተግባራዊ ማድረግ",
+          "ለአቤቱታ ፎርሞች አዘጋጅቶ ማስቀመጥ",
+          "መረጃዎች የሚያዙባቸውን ፎርማቶች ማደራጀትና ክትትል",
+          "አቤቱታዎች በሀርድ/ሶፍት ኮፒ መዝግቦ መያዝ",
+          "ለዜጎች ቅሬታ በሙሉ ምላሽ መስጠት፣ የዜጎችን እስታንዳርድ መተግበር፣ መረጃ ዴስክ"
+        ],
+        weight: "0.15",
+        responsible: ["ሀላፊ", "ቡድን መሪ", "ዐቃቤ ሕግ"],
+        kpi: "90% የፈጣን ምላሽ ማሳካት",
+        indicators: "የወጡ የአገልግሎት ስታንዳርዶች፣ በስታንዳርዱ የተሰጡ አገልግሎቶች %",
+        status: "in-progress"
+      },
+      { pillar: { name: "ምሰላዊት 1", weight: "8%" },
+        goal: { name: "ግብ 1.1", weight: "8%" },
+        closeResult: { name: "የተሻሻለ የአገልግሎት ጥራት", weight: "5" },
+        mainTask: "በስታንደርድ መሰረት ለተጋላጭ ማህበረሰቦች የሚሰጡ አገልግሎቶችን 90% ማድረስ",
+        detailedTasks: [
+          "የሴቶች ህጻናትና ባለብዙ ዘርፍ ጉዳዮችን 100% መተግበር",
+          "አቅመ ደካማ ዜጎች ቅሬታ ቅድሚያ መስጠት",
+          "የማናጅመንት ኮሚቴ ውሳኔዎችን ቅድሚያ ሰጥቶ መከታተል",
+          "በዕድሜ/ጾታ/አካል ጉዳት የተሟላ መረጃ የሚያዝበት ቅፅ አዘጋጅቶ ማስያዝ"
+        ],
+        weight: "0.5",
+        responsible: ["ሀላፊ", "ቡድን መሪ"],
+        kpi: "90% አገልግሎት ለተጋላጮች",
+        indicators: "ለተጋላጮች የተደረጉ አገልግሎቶች %፣ በስታንዳርዱ መሰረት የተሰጡ",
+        status: "in-progress"
+      },
+      { pillar: { name: "ምሰላዊት 1", weight: "8%" },
+        goal: { name: "ግብ 1.1", weight: "8%" },
+        closeResult: { name: "የተሻሻለ የአገልግሎት ጥራት", weight: "5" },
+        mainTask: "በቀረቡ የቅሬታ ጉዳዮች ላይ 95% ያህሉን በተቀመጠው ጊዜ ውስጥ ውሳኔ መስጠት",
+        detailedTasks: [
+          "የቅሬታ አቤቱታዎች ተቀብሎ በተዘረጋ አሰራር ፈጣን ውሳኔ መስጠት",
+          "አፈጻጸም ክትትል የሚያስችል አሰራር ስርዓት መዘርጋት",
+          "ምክንያታዊ ባልሆነ መልኩ የተቆዩ መዝገቦች መንስኤ መረዳት፣ መፍትሄ ማስቀመጥ",
+          "በ15/10/5 ቀናት ውሳኔ በመስጠት የምላሽ ምጣኔን 90% ማድረስ"
+        ],
+        weight: "0.5",
+        responsible: ["ሀላፊ", "ቡድን መሪ", "ዐቃቤ ሕግ"],
+        kpi: "95% ውሳኔ በጊዜ ገደብ",
+        indicators: "በስታንዳርድ መሰረት ውሳኔ ያገኙ ቅሬታዎች %፣ አማካይ የውሳኔ ጊዜ",
+        status: "in-progress"
+      },
+      { pillar: { name: "ምሰላዊት 1", weight: "8%" },
+        goal: { name: "ግብ 1.1", weight: "8%" },
+        closeResult: { name: "የተሻሻለ የአገልግሎት ጥራት", weight: "5" },
+        mainTask: "በቅሬታ መዝገቦች ላይ የሚሰጡ የውሳኔ ጥራትን 95% ማድረስ",
+        detailedTasks: [
+          "ከሀገር ውስጥና ዓለም አቀፍ ህጎች፣ ከሰበር ፍርድ ቤት ውሳኔዎች ጋር በማገናዘብ ጥራት ያለው ውሳኔ መስጠት",
+          "አስፈላጊ ማስረጃዎች ማሰባሰብ",
+          "ውሳኔ የሰጠውን ባለሙያ ማበራሪያ እንዲሰጥ ማድረግ"
+        ],
+        weight: "ሳይሞላ ቀርቷል",
+        responsible: ["ሀላፊ"],
+        kpi: "95% የውሳኔ ጥራት",
+        indicators: "የሰበር ፍርድ ቤት የማረም ምጣኔ፣ የዳግም ምርመራ ቅነሳ",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 1", weight: "8%" },
+        goal: { name: "ግብ 1.1", weight: "8%" },
+        closeResult: { name: "የተሻሻለ የአገልግሎት ጥራት", weight: "5" },
+        mainTask: "የተገልጋዮችን የእርካታ ደረጃ ምጣኔን 90% ማድረስ",
+        detailedTasks: [
+          "በዘመናዊ ቴክኖሎጂ የተደገፈ አሰራር ተግባራዊ ማድረግ",
+          "ተገልጋዮች ጉዳያቸውን የሚከታተሉበት ቴክኖሎጂ ዘርግቶ መጠቀም",
+          "አስተያየት መዝገብ፣ ሳጥንና ቅጽቅጾች አዘጋጅቶ ማስቀመጥ",
+          "ለዜጎች ቅሬታ ሁሉ ምላሽ መስጠት፣ የዜጎችን እስታንዳርድ መተግበር"
+        ],
+        weight: "0.16",
+        responsible: ["ሀላፊ"],
+        kpi: "90% የተገልጋይ እርካታ",
+        indicators: "የወጡ የአገልግሎት ስታንዳርዶች፣ በስታንዳርዱ የተሰጡ አገልግሎቶች %፣ ለተጋላጮች አገልግሎት %፣ ለቅሬታ ምላሽ %",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 1", weight: "8%" },
+        goal: { name: "ግብ 1.1", weight: "8%" },
+        closeResult: { name: "የተስፋፋ ነጻ የሕግ ድጋፍ", weight: "1" },
+        mainTask: "መስፈርቱን ላሟሉ ዜጎች ነጻ የህግ ድጋፍ ማድረግ፣ ለአቅመ ደካማ ቅድሚያ መስጠት",
+        detailedTasks: [
+          "መስፈርቱን ላሟሉ ዜጎች ነጻ የህግ ድጋፍ ማድረግ",
+          "ለአቅመ ደካማ ዜጎች፣ ለአካል ጉዳተኞችና ለሴቶችና ህጻናት ቅድሚያ መስጠት",
+          "አጭር ጊዜ የሚወስዱ ጥያቄ ማቅረቢያ ፎርማቶችን አዘጋጅቶ ማዋል"
+        ],
+        weight: "0.4 / 0.3",
+        responsible: ["ሀላፊ", "ቡድን መሪ"],
+        kpi: "ነጻ ድጋፍ ያገኙ ዜጎች %፣ ሴቶችና ተጋላጭ ድርሻ",
+        indicators: "ነፃ የሕግ ድጋፍ ያገኙ ዜጎች %፣ ከነሱ መካከል ሴቶችና ተጋላጭ %",
+        status: "in-progress"
+      },
+      { pillar: { name: "ምሰላዊት 1", weight: "8%" },
+        goal: { name: "ግብ 1.2 ያደገ የሕዝብና የሲቪል ማኅበረሰብ ተሳትፎና ተጠቃሚነት", weight: "2%" },
+        closeResult: { name: "የተሻሻለ የሕዝብና ሲቪል ተሳትፎ", weight: "2%" },
+        mainTask: "አጋዥ አደረጃጀቶች መለየት፣ ጋራ እቅድ፣ በየሶስት ወሩ መድረክ፣ በዓመት ሁለት ጊዜ የሕዝብ መድረክ",
+        detailedTasks: [
+          "አጋዥ የህዝብና የሲቪል ማህበረሰብ አደረጃጀቶች መለየት",
+          "ከእነዚህ አካላት ጋር በጋራ እቅድ ማዘጋጀት፣ ኦረንቴሽን መስጠት",
+          "በየሶስት ወሩ የጋራ መድረክ ፈጥሮ ውይይት፣ አፈጻጸም መገምገም",
+          "በዓመት ሁለት ጊዜ የሕዝብ መድረክ በማመቻቸት ግብአቶችን ማሰባሰብ"
+        ],
+        weight: "0.4",
+        responsible: ["ሀላፊ"],
+        kpi: "የተፈጠሩ አደረጃጀቶች ቁጥር፣ የተከናወኑ መድረኮች ቁጥር",
+        indicators: "የተፈጠሩ የሕዝብ ተሳትፎ አደረጃጀቶች ቁጥር፣ የተከናወኑ መድረኮች ቁጥር",
+        status: "planned"
+      },
+
+      // ==================== PILLAR 2 ====================
+      { pillar: { name: "ምሰላዊት 2 – የተጠናከረ የሕግ የበላይነት", weight: "70%" },
+        goal: { name: "ግብ 2.1 ያደገ የወንጀል አስተዳደር ውጤታማነትና ቅልጥፍና", weight: "55%" },
+        closeResult: { name: "ውጤታማና ቀልጣፋ የወንጀል ምርመራ", weight: "25" },
+        mainTask: "ዐቃቤ ሕግ የወንጀል ጥቆማ አቀባበል እና አመራር ላይ ከፖሊስ ጋር በጋራ 100% ወንጀል በሆኑ ጉዳዮች ምርመራ እንዲጀመር ማድረግ",
+        detailedTasks: [
+          "ፖሊስ ምርመራ ሳይጀምር ቀርቶ ሲቀር ዐቃቤ ሕግ በቅሬታ አይቶ ምርመራ እንዲጀመር ማድረግ",
+          "የቀረበ የወንጀል ጥቆማ ወንጀል ስለመፈጸሙ አጣራጣሪ በሆነ ጊዜ ፖሊስ እንደ አስፈላጊነቱ እንዲቀበል ወይም እንዲተው ምክር መስጠት",
+          "የወንጀል ባህሪ የሌላቸው ጥቆማዎች ወደ ምርመራ እንዳይገቡ መከላከል"
+        ],
+        weight: "0.25",
+        responsible: ["ሀላፊ", "ቡድን መሪ", "ዐቃቤ ሕግ"],
+        kpi: "100% ትክክለኛ የወንጀል ጥቆማ ወደ ምርመራ መግባት",
+        indicators: "ወደ ምርመራ የገቡ ጥቆማዎች %፣ የተቋረጡ ጉዳዮች ቁጥር",
+        status: "in-progress"
+      },
+      { pillar: { name: "ምሰላዊት 2", weight: "70%" },
+        goal: { name: "ግብ 2.1", weight: "55%" },
+        closeResult: { name: "ውጤታማ የወንጀል ምርመራ", weight: "25" },
+        mainTask: "ምርመራቸው ተጠናቀው በቀረቡ መዛግብቶች ላይ የማጥራት ውሳኔ መስጠት 98%",
+        detailedTasks: [
+          "ፖሊስ ምርመራ በተቀመጠው የጊዜ ገደብ እንዲያጠናቅቅ ክትትል ማድረግ",
+          "በእስር ላይ ለሚገኙ ተጠርጣሪዎች የተሰጠ ጊዜ ቀጠሮ ሳይጠናቀቅ ክስ መቅረብ እንዲችል ምርመራዎችን ከስር መከታተል",
+          "የዐቃቤ ህግንና የመዝገብ ጥምርታ አሰራርን ተግባራዊ ማድረግ",
+          "ለባለሙያዎች የሚመሩ መዝገቦችን አፈጻጸም ክትትል ሥርዓት መዘርጋት"
+        ],
+        weight: "13",
+        responsible: ["ዐቃቤ ሕግ"],
+        kpi: "98% የማጥራት ውሳኔ",
+        indicators: "የማጥራት ምጣኔ፣ የቀነሰ መዝገብ ምልልስ",
+        status: "in-progress"
+      },
+      { pillar: { name: "ምሰላዊት 2", weight: "70%" },
+        goal: { name: "ግብ 2.1", weight: "55%" },
+        closeResult: { name: "ውጤታማ የወንጀል ምርመራ", weight: "25" },
+        mainTask: "ማስረጃ የተሟላባቸው መዛግብት ላይ 85% የክስ ውሳኔ መስጠት",
+        detailedTasks: [
+          "ወደ ምርመራ የሚገቡ ጉዳዮች በዋና ኃላፊዎች ቁጥጥር ስር መሆኑን ማረጋገጥ",
+          "ምርመራው የደረሰበት ደረጃ ሪፖርት መቀበል፣ መገምገም",
+          "ምርመራቸው ተጀምሮ ውጤቱ የፍትሐ ብሔር ወይም ወንጀልነት ባህሪይ የሌላቸው ጉዳዮች ምርመራውን ማቋረጥ"
+        ],
+        weight: "5",
+        responsible: ["ዐቃቤ ሕግ"],
+        kpi: "85% የክስ ውሳኔ",
+        indicators: "የክስ ውሳኔ ምጣኔ",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 2", weight: "70%" },
+        goal: { name: "ግብ 2.1", weight: "55%" },
+        closeResult: { name: "ውጤታማ የወንጀል ምርመራ", weight: "25" },
+        mainTask: "በዐቃቤ ሕግና በፖሊስ መካከል የሚመላለሱ እና የሚዘጉ መዝገቦችን ከ5% እንዳይበልጡ ማድረግ",
+        detailedTasks: [
+          "ወንጀል ሆነው ወደ ምርመራ የገቡ ጥቆማዎች ላይ አስፈላጊ ማስረጃዎች እንዲሟሉ አቅጣጫ መስጠት",
+          "ተሟልተው ይቅረቡ እየተባለ በመመሪያ ለፖሊስ የሚመለሱ መዝገቦች የሚቀንሱበትን አሰራር መከተል"
+        ],
+        weight: "2",
+        responsible: ["ዐቃቤ ሕግ"],
+        kpi: "ከ5% ያነሰ የመዝገብ ምልልስ",
+        indicators: "የተመለሱ መዝገቦች %",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 2", weight: "70%" },
+        goal: { name: "ግብ 2.1", weight: "55%" },
+        closeResult: { name: "ውጤታማ የወንጀል ምርመራ", weight: "25" },
+        mainTask: "በራስ ተነሳሽነት የተከናወነ የወንጀል ምርመራን 20% ማድረስ",
+        detailedTasks: [
+          "መንግስትና የሕዝብ ጥቅም ያለባቸውን የወንጀል ጉዳዮች መለየት",
+          "ከሚመለከታቸው ባለድርሻ አካላት ጋር የጋራ ዕቅድ ማዘጋጀት",
+          "ከባድና ውስብስብ የሆኑ የወንጀል ጉዳዮች በራስ ተነሳሽነት ምርመራቸው እንዲጣራ ማድረግ"
+        ],
+        weight: "1",
+        responsible: ["ዐቃቤ ሕግ"],
+        kpi: "20% በራስ ተነሳሽነት ምርመራ",
+        indicators: "በራስ ተነሳሽነት የተከናወኑ ምርመራዎች %",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 2", weight: "70%" },
+        goal: { name: "ግብ 2.1", weight: "55%" },
+        closeResult: { name: "ውጤታማ የወንጀል ምርመራ", weight: "25" },
+        mainTask: "ዲጂታል ወንጀል ምርመራ መዛግብት አፈጻፀምን 100% ማድረስ",
+        detailedTasks: [
+          "ስለዲጂታል የወንጀል ምርመራ ለዐቃቤ ሕግና ለመርማሪ ፖሊሶች የግንዛቤ ማስጨበጫ ስልጠና ማዘጋጀት",
+          "ለዲጂታል ምርመራ የሚያስፈልጉ ማቴሪያሎችን እንዲሟሉ ማድረግ",
+          "የዲጂታል ወንጀል ምርመራ መዛግብት አፈጻጸም ውጤታማ እንዲሆን ክትትልና ድጋፍ ማድረግ"
+        ],
+        weight: "1",
+        responsible: ["ዐቃቤ ሕግ"],
+        kpi: "100% ዲጂታል ምርመራ አፈጻጸም",
+        indicators: "ዲጂታል የወንጀል ምርመራ መዛግብት %",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 2", weight: "70%" },
+        goal: { name: "ግብ 2.1", weight: "55%" },
+        closeResult: { name: "ውጤታማና ቀልጣፋ የወንጀል ክስ", weight: "30" },
+        mainTask: "የማስቀጣት ምጣኔን በመዝገብና በተከሳሾች በአማካይ 95% ማድረስ",
+        detailedTasks: [
+          "ልዩ ትኩረት የሚፈልጉ፣ ውስብስብና ከባድ የሆኑ ጉዳዮችን ከምርመራ ጀምሮ ልምድ ባላቸው ባለሙያዎች እንዲያዙ ማድረግ",
+          "ከምርመራ ጀምሮ በልዩ ትኩረት መሰራቱን መከታተል፣ መገምገምና ድጋፍ ማድረግ",
+          "የምስክሮችና የሰነድ ማስረጃዎችን ጭብጥ በምርመራ ጊዜ ለይቶ መያዝ",
+          "የክስ መዝገቦችን ከቀጠሮ ቀን በፊት በቂ ጊዜ ወስዶ ማጥናት",
+          "ምስክሮችን አግኝቶ በሚመሰክሩበት ጉዳይ ዙሪያ የማስታወስ ስራ መስራት"
+        ],
+        weight: "10",
+        responsible: ["ዐቃቤ ሕግ"],
+        kpi: "95% የማስቀጣት ምጣኔ",
+        indicators: "የተረቱ ክሶች %፣ የተፈረደባቸው ተከሳሾች %",
+        status: "in-progress"
+      },
+      { pillar: { name: "ምሰላዊት 2", weight: "70%" },
+        goal: { name: "ግብ 2.1", weight: "55%" },
+        closeResult: { name: "ውጤታማ የወንጀል ክስ", weight: "30" },
+        mainTask: "የዐቃቤ ሕግ ይግባኝ ክርክር የመርታት ምጣኔን 70% ማድረስ",
+        detailedTasks: [
+          "ይግባኝ ማለት የሚገባ መሆን አለመሆኑ በፓናል ታይቶ እንዲቀርብ ማድረግ",
+          "የይግባኝ አቤቱታው ማስረጃ የሰማና ክርክር ላይ በነበረ ዐቃቤ ህግ እንዲዘጋጅ ማድረግ",
+          "የችሎት ክርክሩ በበቂ ዝግጅት መደረጉን መከታተል"
+        ],
+        weight: "6",
+        responsible: ["ዐቃቤ ሕግ"],
+        kpi: "70% ይግባኝ መርታት",
+        indicators: "በይግባኝ የተረቱ ጉዳዮች %",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 2", weight: "70%" },
+        goal: { name: "ግብ 2.1", weight: "55%" },
+        closeResult: { name: "ውጤታማ የወንጀል ክስ", weight: "30" },
+        mainTask: "ተከሳሽ ይግባኝ ባለበት መዝገብ የዐቃቤ ሕግ የመርታት ምጣኔን 95% ማድረስ",
+        detailedTasks: [
+          "በስር ፍርድ ቤት ማስረጃ ያሰማና ክርክሩን ያደረገ ባለሙያ ይግባኙን እንዲከታተል ማድረግ",
+          "የችሎት ክርክሩ በበቂ ዝግጅት መደረጉን መከታተል"
+        ],
+        weight: "4",
+        responsible: ["ዐቃቤ ሕግ"],
+        kpi: "95% መርታት (ተከሳሽ ይግባኝ)",
+        indicators: "የተከሳሽ ይግባኝ የተረተባቸው %",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 2", weight: "70%" },
+        goal: { name: "ግብ 2.1", weight: "55%" },
+        closeResult: { name: "ውጤታማ የወንጀል ክስ", weight: "30" },
+        mainTask: "በተፋጠነ የወንጀል ፍትሕ ስርዓት የሚታዩ ጉዳዮችን አፈጻጸም 40% ማድረስ",
+        detailedTasks: [
+          "በተፋጠነ የወንጀል ስርዓት የሚታዩ ጉዳዮችን መለየት",
+          "ምርመራቸውን በፍጥነት በማጠናቀቅ ወደ ፍርድ ቤት ማቅረብ",
+          "ለሶስቱ የፍትሕ አካላት አባላት በተፋጠነ ስርዓት ዙሪያ ስልጠና ማዘጋጀት"
+        ],
+        weight: "4",
+        responsible: ["ዐቃቤ ሕግ"],
+        kpi: "40% የተፋጠነ ስርዓት አፈጻጸም",
+        indicators: "በተፋጠነ ስርዓት የተጠናቀቁ ጉዳዮች %",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 2", weight: "70%" },
+        goal: { name: "ግብ 2.1", weight: "55%" },
+        closeResult: { name: "ውጤታማ የወንጀል ክስ", weight: "30" },
+        mainTask: "ዲጂታል ወንጀል ክስ አፈጻጸምን 100% ማድረስ",
+        detailedTasks: [
+          "የዲጂታል የወንጀል ክስ ለማቅረብ የሚያስችል ማቴሪያሎችን እንዲሟሉ ማድረግ",
+          "የዲጂታል ወንጀል ክስ አፈጻጸም ውጤታማ እንዲሆን ክትትልና ድጋፍ ማድረግ",
+          "CRIMS አሰራር ተግባራዊ ሲደረግ ለባለሙያዎች ስልጠና መስጠት"
+        ],
+        weight: "2",
+        responsible: ["ዐቃቤ ሕግ"],
+        kpi: "100% ዲጂታል ክስ አፈጻጸም",
+        indicators: "በዲጂታል የቀረቡ ክሶች %",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 2", weight: "70%" },
+        goal: { name: "ግብ 2.2 የተሻሻለ የሰብዓዊ መብት ማክበርና ማስከበር", weight: "5%" },
+        closeResult: { name: "በማረሚያ ቤትና ማረፊያ ቤት የተሻሻለ ሰብዓዊ መብት አያያዝ", weight: "5%" },
+        mainTask: "በማረሚያና በማረፊያ ቤቶች 100% ክትትል ማድረግ፣ የሰብዓዊ መብት ጥሰቶችን ተጠያቂነት 100% ማድረስ",
+        detailedTasks: [
+          "በማረፊያና በማረሚያ ቤት የሚገኙ ተጠርጣሪዎችና ታራሚዎች ሰብአዊ መብት አያያዝ በየሁለት ሳምንቱ ጉብኝት ማድረግ",
+          "ዋስትና ተከልክለው ወይም ተፈቅዶላቸው ዋስ ማቅረብ ያልቻሉ ተከሳሾችን ጉዳይ ቅድሚያ መስራት",
+          "በፖሊስ የሚጠየቅ የምርመራ ጊዜ ቀጠሮና ምክንያት አግባብነት ክትትል ማድረግ",
+          "በፍርድ ቤት የሚሰጥ የዋስትና መፈቀድ ወይም የይለቀቅ ትእዛዝ መፈጸሙን መከታተል",
+          "ህገ ወጥ እስር እንዳይኖር ክትትል ማድረግ፣ ተፈጽሞ ሲገኝ ተጠያቂነትን ማስፈን"
+        ],
+        weight: "2 (ክትትል) / 3 (ተጠያቂነት)",
+        responsible: ["ዐቃቤ ሕግ"],
+        kpi: "100% ክትትል፣ 100% ተጠያቂነት",
+        indicators: "የተደረጉ ጉብኝቶች ቁጥር፣ የተስተናገዱ ቅሬታዎች፣ ተጠያቂ የሆኑ ጥሰቶች %",
+        status: "in-progress"
+      },
+      { pillar: { name: "ምሰላዊት 2", weight: "70%" },
+        goal: { name: "ግብ 2.3 ያደገ የመንግሥትና ሕዝብ ፍትሐብሔራዊ ጥቅም", weight: "10%" },
+        closeResult: { name: "የተሰጠ የሕግ ምክር", weight: "" },
+        mainTask: "ለቀረቡ የህግ ምክር ጥያቄዎች 100% ምላሽ መስጠት",
+        detailedTasks: [
+          "የሚቀርቡ የህግ ምክር ጥያቄዎችን ተቀብሎ ምላሽ መስጠት",
+          "የምክር አገልግሎት አሰጣጥ ስርዓት መዘርጋት"
+        ],
+        weight: "1",
+        responsible: ["ዐቃቤ ሕግ"],
+        kpi: "100% ምላሽ መስጠት",
+        indicators: "ምላሽ ያገኙ የህግ ምክር ጥያቄዎች %",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 2", weight: "70%" },
+        goal: { name: "ግብ 2.3", weight: "10%" },
+        closeResult: { name: "የተሻሻለ የፍትሐብሔር ጉዳዮች ክርክር ውጤታማነት", weight: "" },
+        mainTask: "በፍትሐ ብሔር ጉዳዮች የቀጥታ ክስ የመርታት ምጣኔን 98% ማድረስ",
+        detailedTasks: [
+          "የፍትሐ ብሔር ክሶችን በአግባቡ ማዘጋጀት",
+          "ማስረጃዎችን ማሟላት",
+          "የችሎት ክርክር በበቂ ዝግጅት ማካሄድ"
+        ],
+        weight: "3",
+        responsible: ["ዐቃቤ ሕግ"],
+        kpi: "98% የመርታት ምጣኔ (ቀጥታ ክስ)",
+        indicators: "በፍትሐ ብሔር የተረቱ ቀጥታ ክሶች %",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 2", weight: "70%" },
+        goal: { name: "ግብ 2.3", weight: "10%" },
+        closeResult: { name: "የተሻሻለ የፍትሐብሔር ጉዳዮች ክርክር ውጤታማነት", weight: "" },
+        mainTask: "በተከሳሽነት መርታት ምጣኔ 98% ማድረስ",
+        detailedTasks: [
+          "በተከሳሽነት የሚቀርቡ ጉዳዮችን በአግባቡ መከላከል",
+          "ማስረጃዎችን ማሟላትና ማቅረብ"
+        ],
+        weight: "2",
+        responsible: ["ዐቃቤ ሕግ"],
+        kpi: "98% መርታት (ተከሳሽነት)",
+        indicators: "በተከሳሽነት የተረቱ ጉዳዮች %",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 2", weight: "70%" },
+        goal: { name: "ግብ 2.3", weight: "10%" },
+        closeResult: { name: "የተሻሻለ በፍትሐብሔር ጉዳዮች የይግባኝ ክርክር አፈጻጸም", weight: "" },
+        mainTask: "በፍትሐ ብሔር ጉዳይ ዐቃቤ ሕግ ይግባኝ የሚያቀርብባቸውን ጉዳዮች የመርታት ምጣኔን 80% ማድረስ",
+        detailedTasks: [
+          "ይግባኝ ማቅረብ ያለባቸውን ጉዳዮች መለየት",
+          "የይግባኝ አቤቱታ በአግባቡ ማዘጋጀት",
+          "ከፍተኛ ፍርድ ቤት ክርክር በበቂ ዝግጅት ማካሄድ"
+        ],
+        weight: "2",
+        responsible: ["ዐቃቤ ሕግ"],
+        kpi: "80% ይግባኝ መርታት",
+        indicators: "በይግባኝ የተረቱ ጉዳዮች %",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 2", weight: "70%" },
+        goal: { name: "ግብ 2.3", weight: "10%" },
+        closeResult: { name: "የተሻሻለ በፍትሐብሔር ጉዳዮች የይግባኝ ክርክር አፈጻጸም", weight: "" },
+        mainTask: "ዐቃቤ ሕግ መልስ ሰጪ በመሆን የሚከራከርባቸውን ጉዳዮች የስር ፍርድ ቤት ውሳኔን የማስጠበቅ ምጣኔን 95% ማድረስ",
+        detailedTasks: [
+          "የተከሳሾችን ይግባኝ በአግባቡ መከላከል",
+          "የስር ፍርድ ቤት ውሳኔ ትክክለኛነት ማስረጃዎችን ማሟላት"
+        ],
+        weight: "1",
+        responsible: ["ዐቃቤ ሕግ"],
+        kpi: "95% የማስጠበቅ ምጣኔ",
+        indicators: "የተጠበቁ የስር ፍርድ ቤት ውሳኔዎች %",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 2", weight: "70%" },
+        goal: { name: "ግብ 2.3", weight: "10%" },
+        closeResult: { name: "የተሻሻለ የፍርድ አፈፃፀም", weight: "" },
+        mainTask: "በፍትሐ ብሔር ጉዳዮች የተሰጡ ፍርዶችን የማስፈጸም ምጣኔን 90% ማድረስ",
+        detailedTasks: [
+          "የተሰጡ ፍርዶችን በመከታተል መዝገብ መያዝ",
+          "ከማስፈጸሚያ አካላት ጋር በመቀናጀት መስራት",
+          "ያልተፈጸሙ ፍርዶችን በመለየት እርምጃ መውሰድ"
+        ],
+        weight: "1",
+        responsible: ["ዐቃቤ ሕግ"],
+        kpi: "90% የፍርድ አፈጻጸም",
+        indicators: "የተፈጸሙ ፍርዶች %",
+        status: "planned"
+      },
+
+      // ==================== PILLAR 3 ====================
+      { pillar: { name: "ምሰላዊት 3 – የተሻሻለ ማረምና ማነጽ", weight: "3%" },
+        goal: { name: "ግብ 3.1 የተሻሻለ የማረምና ማነጽ ውጤታማነት", weight: "3%" },
+        closeResult: { name: "የተሻሻለ የቅጣቶች አፈጻጸም", weight: "3" },
+        mainTask: "የእስራት ቅጣት ከተወሰነባቸው ተከሳሾች መካከል የታሰሩ ሰዎችን ምጣኔ 95% ማድረስ",
+        detailedTasks: [
+          "ከምርመራ ጀምሮ የተከሳሾችን አድራሻ በአግባቡ እንዲያዝ ክትትል ማድረግ",
+          "ተከሳሾችን በማቅረብ ረገድ የሚስተዋሉ ችግሮችን ከፖሊስ አመራሮች ጋር በመወያየት መፍትሄ ማስቀመጥ",
+          "በተከሳሾች አቀራረብ ዙሪያ የሚስተዋሉ ብልሹ አሰራሮችን በመለየት ማስተካከል",
+          "ተከሳሾችን ለማቅረብ ስምሪትና ሀላፊነት የሚሰጣቸውን የፖሊስ አባላትን በሚያከናውኑት ተግባራት ዙሪያ ግንዛቤ መስጠት",
+          "ከዐቃቤ ሕግ አንጻር በየጊዜው አስፈላጊውን ክትትል ማድረግ",
+          "በሌሉበት የቅጣት ውሳኔ የተላለፈባቸውን ተከሳሾች ከፖሊስ ጋር በመቀናጀት ፈልጐ ተይዘው ቅጣታቸውን እንዲፈጽሙ ማድረግ"
+        ],
+        weight: "#",
+        responsible: ["ሀላፊ", "ቡድን መሪ", "ዐቃቤ ሕግ"],
+        kpi: "95% የእስራት ቅጣት አፈጻጸም",
+        indicators: "የታሰሩ ተከሳሾች %፣ በሌሉበት የተፈረደባቸው ተከሳሾች ቁጥር",
+        status: "in-progress"
+      },
+      { pillar: { name: "ምሰላዊት 3", weight: "3%" },
+        goal: { name: "ግብ 3.1", weight: "3%" },
+        closeResult: { name: "የተሻሻለ የቅጣቶች አፈጻጸም", weight: "3" },
+        mainTask: "በገንዘብ ከተቀጡ ተከሳሾች መካከል 50% እንዲፈጸም ማድረግ",
+        detailedTasks: [
+          "በየጊዜው የገንዘብ ቅጣት የሚወሰንባቸውን የተከሳሽ መዝገቦች እየተከታተሉ መረጃዎችን በአግባቡ አደራጅቶ መያዝ",
+          "በቅርንጫፍ ጽህፈት ቤቱ ስራውን በባለቤትነት መያዝ፣ የሚከታተል አካል መመደብ",
+          "ከፍርድ ቤትና ከማረሚያ ቤት ጋር ተቀናጅቶ መስራት",
+          "የተግባሩን አፈጻጸም በየጊዜው ክትትል በማድረግ ችግሮችን መለየት"
+        ],
+        weight: "#",
+        responsible: ["ሀላፊ", "ቡድን መሪ", "ዐቃቤ ሕግ"],
+        kpi: "50% የገንዘብ ቅጣት መፈጸም",
+        indicators: "የተፈጸሙ የገንዘብ ቅጣቶች %",
+        status: "planned"
+      },
+
+      // ==================== PILLAR 4 ====================
+      { pillar: { name: "ምሰላዊት 4 – ያደገ ተቋማዊ አቅም", weight: "15%" },
+        goal: { name: "ግብ 4.1 የተሻሻለ የስትራቴጂክ አመራር ሥርዓት", weight: "3%" },
+        closeResult: { name: "የጠነከረ መረጃ-መር የሆነ የውሳኔ ሥርዓት", weight: "" },
+        mainTask: "የቅርንጫፍ ጽህፈት ቤቱን ዓመታዊ ዋና ዋና አፈጻጸሞች የተጠናቀረ ሰነድ ማዘጋጀት፣ በጥንካሬና በድክመት ለይቶ መተንተን",
+        detailedTasks: [
+          "የቅርንጫፍ ጽህፈት ቤቱን ዓመታዊ ዋና ዋና አፈጻጸሞች የተጠናቀረ ሰነድ ማዘጋጀት",
+          "በጥንካሬና በድክመት ለይቶ መተንተን",
+          "ምክረ ሃሳቦችን ማስቀመጥ",
+          "የመረጃዎችን ትንተና መሰረት አድርገው የቀረቡ ምክረ ሃሳቦች ትግበራ 100% ማድረስ"
+        ],
+        weight: "0.25",
+        responsible: ["ሀላፊ"],
+        kpi: "100% ምክረ ሃሳቦች ተግባራዊ መሆናቸው",
+        indicators: "የተዘጋጀ ሰነድ፣ የተተገበሩ ምክረ ሃሳቦች ቁጥር",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 4", weight: "15%" },
+        goal: { name: "ግብ 4.1", weight: "3%" },
+        closeResult: { name: "የተሻሻሉ አሠራሮች", weight: "" },
+        mainTask: "በተዘጋጁ መመሪዎች/ማኑዋሎች/ስታንደርድ መሰረት የተተገበሩ አሰራሮችን 90% ማድረስ",
+        detailedTasks: [
+          "የቅርንጫፍ ጽህፈት ቤቱን ተግባርና ኃላፊነት በአግባቡ መወጣት የሚያስችለው አደረጃጀት እና አሰራር እንዲኖር ማድረግ",
+          "መመሪያ እና ማንዋል የሚያስፈልጋቸው ስታንዳርድ እንዲኖራቸው መስራት",
+          "የለውጥ መሳሪያዎችን 90% ያህሉን ተግባራዊ ማድረግ"
+        ],
+        weight: "0.125",
+        responsible: ["ሀላፊ", "ቡድን መሪ", "ዐቃቤ ሕግ"],
+        kpi: "90% አሰራሮች መተግበር",
+        indicators: "የተተገበሩ አሰራሮች %፣ የተዘጋጁ መመሪያዎች ቁጥር",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 4", weight: "15%" },
+        goal: { name: "ግብ 4.1", weight: "3%" },
+        closeResult: { name: "የተሻሻለ የእቅድ አፈጻጸም ክትትልና ግምገማ", weight: "" },
+        mainTask: "የተዘጋጀ እቅድ፣ ሪፖርትና ግብረ መልስ ሰነድ ማዘጋጀት",
+        detailedTasks: [
+          "የተዘጋጀ እቅድ፣ ሪፖርትና ግብረ መልስ ሰነድ ማዘጋጀት",
+          "የተዘረጋ ስርዓትና የተደረገ ክትትልና ግምገማ ማካሄድ"
+        ],
+        weight: "1 / 0.5",
+        responsible: ["ሀላፊ", "ሀላፊና ቡድን መሪ"],
+        kpi: "ወቅታዊ ክትትልና ግምገማ",
+        indicators: "የተዘጋጁ ሪፖርቶች ቁጥር፣ የተካሄዱ ግምገማዎች ቁጥር",
+        status: "in-progress"
+      },
+      { pillar: { name: "ምሰላዊት 4", weight: "15%" },
+        goal: { name: "ግብ 4.2 የተሻሻለ የሕዝብ ግንኙነት", weight: "1%" },
+        closeResult: { name: "የተሻሻለ የመረጃ ተደራሽነትና ገጽታ ግንባታ", weight: "" },
+        mainTask: "በተቋሙ የተቀናጀ የተግባቦት ስትራቴጂ መተግበር",
+        detailedTasks: [
+          "በተቋሙ የተቀናጀ የተግባቦት ስትራቴጂ መተግበር",
+          "በተግባቦት ስትራቴጂ መሰረት በዘርፉ የሚከናወኑ ስራዎችን ለህዝብ ማድረስ",
+          "አስተማሪ የችሎት ውሎዎች ለህዝብ እንዲደርሱ ማድረግ"
+        ],
+        weight: "0.5 / 0.25",
+        responsible: ["ሀላፊ", "ሀላፊና ቡድን መሪ"],
+        kpi: "የሕዝብ ግንኙነት ተግባራት ቁጥር",
+        indicators: "የተከናወኑ የሕዝብ ግንኙነት ስራዎች ቁጥር፣ የሕዝብ ግንዛቤ መጠን",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 4", weight: "15%" },
+        goal: { name: "ግብ 4.3 የተሻሻለ የሰው ሃብት አስተዳደር", weight: "4%" },
+        closeResult: { name: "የተጠናከረ የሰው ሀብት አስተዳደር", weight: "" },
+        mainTask: "ሁሉም ባለሙያዎችና አመራሮች በየወቅቱ እንዲመዘኑ ክትትል ማድረግ",
+        detailedTasks: [
+          "በቅርንጫፍ ጽህፈት ቤቱ የሚገኙ ባለሙያዎችና አመራሮች ሁሉም በየወቅቱ እንዲመዘኑ ክትትል ማድረግ",
+          "የሰራተኞችና የአመራሮች ምዘና በስራቸው ያመጡትን ውጤት እንዲያንፀባርቅ ማድረግ",
+          "ሴት አመራሮች የሚበቁበትን ምቹ ሁኔታ መፍጠር",
+          "ሴት ዐቃብያነ ህግ እና አስተዳደር ሰራተኞች የአመራር ክህሎት ስልጠና እንዲያገኙ ማድረግ"
+        ],
+        weight: "1.25 / 0.25",
+        responsible: ["ሀላፊ"],
+        kpi: "100% ምዘና መከናወን",
+        indicators: "የተጠናቀቁ ምዘናዎች %፣ የሴት አመራሮች ቁጥር ጭማሪ",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 4", weight: "15%" },
+        goal: { name: "ግብ 4.3", weight: "4%" },
+        closeResult: { name: "የተሻሻለ የአመራርና የባለሙያ ስነ ምግባርና ስብዕና", weight: "" },
+        mainTask: "ከስነ-ምግባርና ብልሹ አሰራር አኳያ የሚታዩ ችግሮችን ለመከላከል የግንዛቤ ማስጨበጫ ስልጠና መስጠት",
+        detailedTasks: [
+          "ከስነ-ምግባርና ብልሹ አሰራር አኳያ የሚታዩ ችግሮችን ለመከላከል የግንዛቤ ማስጨበጫ ስልጠና ማዘጋጀት",
+          "በምርመራ መዝገቦችና በቅሬታዎች ላይ የሚሰጡ ውሳኔዎችን አግባብነት መፈተሽ",
+          "ብልሹ አሰራር ሲታይ 100% ተጠያቂነት እንዲሰፍን ማድረግ",
+          "ጥቆማ የሚያቀርቡበት ሥርዓት መዘርጋት",
+          "የብልሹ አሰራሮችን በየጊዜው በሚደረጉ ስብሰባዎች ላይ በአጀንዳነት ማንሳት"
+        ],
+        weight: "ሳይሞላ ቀርቷል",
+        responsible: ["ሀላፊ"],
+        kpi: "100% ተጠያቂነት ማስፈን",
+        indicators: "የተመረመሩ የስነ ምግባር ጥሰቶች፣ ተጠያቂ የሆኑ ጉዳዮች %",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 4", weight: "15%" },
+        goal: { name: "ግብ 4.4 የተጠናከረ የሰው ሃብት ልማት", weight: "2%" },
+        closeResult: { name: "የተገነባ የአመራርና ባለሙያ አቅም", weight: "" },
+        mainTask: "ግንባር ቀደም ሰራተኞችንና አመራሮችን በመለየት እውቅና መስጠት",
+        detailedTasks: [
+          "ግንባር ቀደም ሰራተኞችንና አመራሮችን በመለየት እውቅና መስጠት",
+          "ለግንባር ቀደም ሰራተኞች የማበረታቻ ሥርዓት መዘርጋት",
+          "የሰራተኞችን እርካታ ለማሳደግ ግልጽነት ተሞላበት፣ ዲሞክራሲያዊ እና አሳታፊ የሆነ የስራ አመራርን መከተል",
+          "የስራ ቦታ ምቹ ለማድረግ ለሰራተኞች ለስራ የሚያስፈልጉ ግብዓቶችን ማሟላት"
+        ],
+        weight: "0.5",
+        responsible: ["ሀላፊ"],
+        kpi: "የሰራተኛ እርካታ መጠን",
+        indicators: "የተሸለሙ ሰራተኞች ቁጥር፣ የሰራተኛ እርካታ ዳሰሳ ውጤት",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 4", weight: "15%" },
+        goal: { name: "ግብ 4.5 ያደገ ዲጂታላይዜሽን", weight: "3%" },
+        closeResult: { name: "የተገነባ ዲጂታል ሥርዓት", weight: "" },
+        mainTask: "መዛግብትን ስካን በማድረግ በሶፍት ኮፒ መያዝ",
+        detailedTasks: [
+          "መዛግብትን ስካን በማድረግ በሶፍት ኮፒ መያዝ",
+          "መወገድ የሚገባቸውን መዛግብትን እና የተለያዩ ሰነዶችን በመለየት እንዲወገዱ ማድረግ",
+          "ስካን ለማድረግ የሚያስፈልጉ ግብዓቶችን ማሟላት",
+          "በሪጅስትራር የካይዘን ስርዓትን በአግባቡ መተግበር"
+        ],
+        weight: "0.5",
+        responsible: ["ሀላፊ"],
+        kpi: "ዲጂታል የተደረጉ መዝገቦች %",
+        indicators: "የተቀየሩ መዝገቦች ቁጥር፣ የካይዘን ስርዓት ተግባራዊነት",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 4", weight: "15%" },
+        goal: { name: "ግብ 4.5", weight: "3%" },
+        closeResult: { name: "የተሻሻለ የቴክኖሎጂ መሠረተ ልማት አስተዳደር", weight: "" },
+        mainTask: "በቅርንጫፍ ጽህፈት ቤቱ የሚገኙ የቴክኖሎጂ መሳሪያዎችን ደህንነት ማረጋገጥ",
+        detailedTasks: [
+          "በቅርንጫፍ ጽህፈት ቤቱ የሚገኙ የቴክኖሎጂ መሳሪያዎችን ደህንነታቸው የተረጋገጠ እንዲሆን ከሚመለከተው ስራ ክፍል ጋር በጋራ መስራት"
+        ],
+        weight: "1",
+        responsible: ["ሀላፊ"],
+        kpi: "100% የቴክኖሎጂ መሳሪያዎች ደህንነት",
+        indicators: "ደህንነታቸው የተረጋገጡ መሳሪያዎች %",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 4", weight: "15%" },
+        goal: { name: "ግብ 4.6 ያደገ የሀብት ምንጭ፣ አጠቃቀምና አስተዳደር", weight: "2%" },
+        closeResult: { name: "ፍትሐዊና ውጤታማ የሀብት አጠቃቀም", weight: "" },
+        mainTask: "ለስራ አገልግሎት የሚሰጡ አላቂ ንብረቶችን በቁጠባና በአግባቡ መጠቀም",
+        detailedTasks: [
+          "ለስራ አገልግሎት የሚሰጡ አላቂ ንብረቶችን በቁጠባና በአግባቡ መጠቀም",
+          "ለስራ ክፍሉ የሚታደሉ ንብረቶችን በግልጽነት እና በፍትሐዊነት ማደል",
+          "ቋሚ ንብረቶችን ደህንነታቸው በተጠበቀ ሁኔታ በአግባቡ በመገልገል ብልሽት እንዳይደርስባቸው ማድረግ"
+        ],
+        weight: "0.2 / 0.14 / 0.16",
+        responsible: ["ሀላፊ", "ቡድን መሪ", "ዐቃቤ ሕግ"],
+        kpi: "የሀብት አጠቃቀም ቅልጥፍና",
+        indicators: "የንብረት ብልሽት መጠን፣ የቁጠባ ምጣኔ",
+        status: "in-progress"
+      },
+      { pillar: { name: "ምሰላዊት 4", weight: "15%" },
+        goal: { name: "ግብ 4.6", weight: "2%" },
+        closeResult: { name: "የተሻሻለ መሠረታዊ አገልግሎት", weight: "" },
+        mainTask: "ለስራ የሚያስፈልጉ አገልግሎቶች እና ግብዓቶች በተሟላ ሁኔታ እንዲቀርቡ ማድረግ",
+        detailedTasks: [
+          "ለስራ የሚያስፈልጉ አገልግሎቶች እና ግብዓቶች በተሟላ ሁኔታ እንዲቀርቡ ማድረግ",
+          "የተጠየቁ አገልግሎቶች በስራ ላይ ጫና ሳያሳድሩ በፍጥነት ምላሽ መስጠት",
+          "አገልግሎቶችን ለማሟላት ከሚመለከተው የተቋም የስራ ክፍል ጋር ተቀናጅቶ መስራት"
+        ],
+        weight: "0.2 / 0.6",
+        responsible: ["ሀላፊ"],
+        kpi: "100% አገልግሎት መሟላት",
+        indicators: "የተሟሉ አገልግሎቶች %፣ የአገልግሎት አሰጣጥ ፍጥነት",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 4", weight: "15%" },
+        goal: { name: "ግብ 4.6", weight: "2%" },
+        closeResult: { name: "ያደገ የማሕበራዊ ኃላፊነትና ተሳትፎ", weight: "" },
+        mainTask: "በተቋሙ በሚዘጋጅ የችግኝ ተከላና የደም ልገሳ መርሃ ግብር ላይ መሳተፍ",
+        detailedTasks: [
+          "በተቋሙ በሚዘጋጅ የችግኝ ተከላና የደም ልገሳ መርሃ ግብር ላይ መሳተፍ",
+          "የአቅመ ደካማ ዜጎች በሚደረግ ድጋፍ ላይ ተሳትፎ ማድረግ",
+          "በዝቅተኛ ኑሮ ላይ ለሚገኙና አቅመ ደካማ ለሆኑ የህብረተሰብ ክፍሎች የትምህርት ቁሳቁስና ሌሎች የሚያስፈልጉ ወጪዎችን አቅም በፈቀደ መልኩ መሸፈን"
+        ],
+        weight: "ሳይሞላ ቀርቷል",
+        responsible: ["ሀላፊ", "ቡድን መሪ", "ዐቃቤ ሕግ"],
+        kpi: "የማህበራዊ ተሳትፎ መጠን",
+        indicators: "በማህበራዊ ተግባራት የተሳተፉ ሰራተኞች ቁጥር፣ የተደረጉ ድጋፎች ብዛት",
+        status: "planned"
+      },
+
+      // ==================== PILLAR 5 ====================
+      { pillar: { name: "ምሰላዊት 5 – የተጠናከረ ቅንጅትና ትብብር", weight: "4%" },
+        goal: { name: "ግብ 5.1 የተጠናከረ የፌዴራል-ክልል ቅንጅት", weight: "2%" },
+        closeResult: { name: "የተጠናከረ የፌዴራል የፍትሕ ተቋማት ትብብር", weight: "" },
+        mainTask: "ከፍትሕ አካላት ጋር ለሚደረጉ ውይይቶች አስፈላጊ መረጃዎችን አደራጅቶ መያዝ",
+        detailedTasks: [
+          "ከፍትሕ አካላት ጋር ለሚደረጉ ውይይቶች በግብአትነት ሊያገልግሉ የሚችሉ አስፈላጊ የሆኑ የተሟሉ መረጃዎችን አደራጅቶ መያዝ",
+          "በወር አንድ ጊዜ በሚዘጋጁ የጋራ መድረኮች ላይ በመገኘት ተሳትፎ ማድረግ",
+          "በፍትሕ አካላት አሰራር ዙሪያ የሚታዩ ችግሮችን ለይቶ በማስረጃ አስደግፎ ማቅረብ",
+          "በጋራ ለሚወሰኑ ውሳኔዎች ሙሉ በሙሉ ተግባራዊ እንዲሆኑ ጥረት ማድረግ",
+          "የሚዘጋጁ የጋራ መድረኮችን ለቅርንጫፍ ጽህፈት ቤቱ ስራ መሳካት በሚያግዝ መልኩ መጠቀም"
+        ],
+        weight: "0.5 / 1 / 0.1 / 0.3",
+        responsible: ["ሀላፊ"],
+        kpi: "የተከናወኑ የጋራ መድረኮች ቁጥር",
+        indicators: "የተከናወኑ መድረኮች ቁጥር፣ ተግባራዊ የሆኑ የጋራ ውሳኔዎች %",
+        status: "in-progress"
+      },
+      { pillar: { name: "ምሰላዊት 5", weight: "4%" },
+        goal: { name: "ግብ 5.2 ያደገ የባለድርሻ አካላት ትብብር", weight: "1%" },
+        closeResult: { name: "የተጠናከረ ከሕግ አውጪው ትብብር", weight: "" },
+        mainTask: "ከክፍለ ከተማ ምክር ቤት አባላት ጋር በመወያየት ውጤታማ ድጋፍ ማግኘት",
+        detailedTasks: [
+          "ቅርንጫፍ ጽህፈት ቤቶች የተሰጣቸውን ተልዕኮ ለመወጣት የሚያጋጥሙትን ችግሮች በመለየት ከክፍለ ከተማ ምክር ቤት አባላት ጋር መወያየት",
+          "ከክፍለ ከተማ ምክር ቤት አባላትና ከአስፈጻሚ አካላት ጋር በጋራ ሊከናወኑ የሚችሉ ተግባራትን ለይቶ አቅዶ መስራት",
+          "በየጊዜው የውይይት መድረኮችን በማዘጋጀት በአሰራር ላይ የሚያጋጥሙትን ማነቆዎች ለመፍታት ጥረት ማድረግ"
+        ],
+        weight: "0.25 / 0.5",
+        responsible: ["ሀላፊ"],
+        kpi: "ከባለድርሻ አካላት ጋር የተከናወኑ ውይይቶች ቁጥር",
+        indicators: "የተከናወኑ ውይይቶች ቁጥር፣ የተፈቱ ማነቆዎች ቁጥር",
+        status: "planned"
+      },
+      { pillar: { name: "ምሰላዊት 5", weight: "4%" },
+        goal: { name: "ግብ 5.3 የተሻሻለ የአጋር አካላት ድጋፍና ትብብር", weight: "1%" },
+        closeResult: { name: "ያደገ የባለድርሻና አጋር አካላት ጋር የተፈጸሙ የትብብር ስምምነቶች", weight: "" },
+        mainTask: "በቅርንጫፍ ጽህፈት ቤት ደረጃ በጋራ ሊሰሩ የሚችሉ የባለድርሻ አካላትን ለይቶ መለየት",
+        detailedTasks: [
+          "በቅርንጫፍ ጽህፈት ቤት ደረጃ በጋራ ሊሰሩ የሚችሉ የባለድርሻ አካላትን ለይቶ መረጃዎችን አደራጅቶ መያዝ",
+          "ከባለድርሻ አካላት ጋር በጋራ ሊሰሩ የሚችሉ ተግባራትን በመለየት እቅድ ማዘጋጀት",
+          "በተዘጋጀው እቅድ ላይ መድረክ አዘጋጅቶ ውይይት በማድረግ እቅዱን የጋራ ማድረግ",
+          "በተዘጋጀው እቅድ መሰረት ተግባራትን መፈጸም",
+          "የተዘጋጀውን እቅድ አፈጻጸም ለመገምገም መደበኛ ጊዜ በመወሰን በጋራ እየተገናኙ መገምገም"
+        ],
+        weight: "0.1 / 0.2 / 0.5",
+        responsible: ["ሀላፊ"],
+        kpi: "የተፈጸሙ የትብብር ስምምነቶች ቁጥር",
+        indicators: "የተፈጠሩ አጋርነቶች ቁጥር፣ በጋራ የተከናወኑ ተግባራት ቁጥር",
+        status: "planned"
+      }
+    ];
+
+    // Status indicator with color
+    function getStatusDot(status) {
+      const colors = {
+        'in-progress': 'bg-blue-500',
+        'planned': 'bg-yellow-500',
+        'completed': 'bg-green-500'
+      };
+      const color = colors[status] || 'bg-gray-400';
+      return `<span class="progress-indicator ${color}"></span>`;
+    }
+
+    // Status text in Amharic
+    function getStatusText(status) {
+      const texts = {
+        'in-progress': 'እየተከናወነ ነው',
+        'planned': 'ያልተጀመረ',
+        'completed': 'ተጠናቋል'
+      };
+      return texts[status] || status;
+    }
+
+    // Render task card - WITHOUT date range
+    function renderTaskCard(t, number) {
+      return `
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-lg transition flex flex-col gap-2">
+          <!-- Number -->
+          <div class="text-3xl font-bold text-gray-800 mb-2">${number}.</div>
+          
+          <!-- Pillar / Goal / CloseResult badges -->
+          <div class="flex flex-wrap items-center gap-2 text-sm mb-1">
+            <span class="bg-blue-100 px-2 py-0.5 rounded-full font-semibold">አምድ · ${t.pillar.weight}</span>
+            <span class="bg-green-100 px-2 py-0.5 rounded-full font-semibold">ግብ · ${t.goal.weight || ''}</span>
+            <span class="bg-purple-100 px-2 py-0.5 rounded-full font-semibold">ውጤት · ${t.closeResult.weight || ''}</span>
+          </div>
+          <!-- Names -->
+          <div class="font-bold text-lg">🏛️ ${t.pillar.name}</div>
+          <div class="font-semibold text-base">🎯 ${t.goal.name}</div>
+          <div class="text-base italic">✨ ${t.closeResult.name}</div>
+          
+          <div class="mt-2 font-medium text-blue-800 border-t pt-2">📋 ዋና ተግባር (lvl4):</div>
+          <div class="text-base bg-gray-50 p-3 rounded-lg">${t.mainTask}</div>
+          
+          <!-- detailed tasks -->
+          <ul class="list-disc pl-5 text-sm text-gray-700 space-y-0.5 mt-1">
+            ${t.detailedTasks.map(d => `<li>${d}</li>`).join('')}
+          </ul>
+          
+          <!-- Weight & Responsible -->
+          <div class="flex flex-wrap items-center gap-3 mt-2">
+            <span class="bg-gray-200 px-3 py-1 rounded-full text-sm font-semibold">ክብደት: ${t.weight}</span>
+            <span class="bg-blue-50 px-3 py-1 rounded-full text-sm font-semibold border border-blue-200">ፈፃሚ አካል: ${t.responsible.join('፣ ')}</span>
+          </div>
+          
+          <!-- TIMELINE - only status indicator, NO DATES -->
+          <div class="timeline-box mt-2 flex items-center justify-between">
+            <span class="font-semibold">📅 የአፈጻጸም ሁኔታ:</span>
+            <div class="flex items-center gap-1">
+              ${getStatusDot(t.status)}
+              <span class="font-medium">${getStatusText(t.status)}</span>
+            </div>
+          </div>
+          
+          <!-- KPI & Indicators -->
+          <div class="mt-2 text-base"><span class="font-bold">KPI:</span> ${t.kpi}</div>
+          <div class="kpi-box mt-1">📊 አመላካች: ${t.indicators}</div>
+        </div>
+      `;
+    }
+
+    // Filter by responsible
+    function filterByRole(role) {
+      return allTasks.filter(t => t.responsible.includes(role));
+    }
+
+    // Render role page
+    function renderRolePage(role, roleName, colorClass) {
+      const tasks = filterByRole(role);
+      if (tasks.length === 0) return `<div class="p-10 text-center">ለዚህ ኃላፊነት የተወሰኑ ተግባራት አልተገኙም።</div>`;
+      let html = `<h2 class="text-3xl font-bold mb-5 ${colorClass} bg-opacity-20 p-3 rounded-2xl">${roleName} · በፈፃሚነት የተመደቡ ተግባራት (${tasks.length})</h2>`;
+      html += `<div class="grid grid-cols-1 gap-5">`;
+      tasks.forEach((t, index) => { html += renderTaskCard(t, index + 1); });
+      html += `</div>`;
+      return html;
+    }
+
+    // Home page - simplified to only show title and role statistics
+    function renderHome() {
+      return `
+        <div class="text-center py-8 max-w-2xl mx-auto">
+          <h2 class="text-4xl font-bold text-slate-900 mb-8">በፍትህ ሚኒስቴር የአራዳ ቅ/ጽ ቤት 2026 የስድስት ወር ሪፖርት እና እቅድ</h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+            <a href="#head" class="bg-blue-100 hover:bg-blue-200 p-6 rounded-2xl shadow-sm transition">
+              <div class="text-4xl font-bold text-blue-800">${filterByRole('ሀላፊ').length}</div>
+              <div class="text-lg mt-2">👤 ሀላፊ</div>
+              <div class="text-base text-gray-600">ዋና ተግባራት</div>
+            </a>
+            <a href="#teamlead" class="bg-green-100 hover:bg-green-200 p-6 rounded-2xl shadow-sm transition">
+              <div class="text-4xl font-bold text-green-800">${filterByRole('ቡድን መሪ').length}</div>
+              <div class="text-lg mt-2">👥 ቡድን መሪ</div>
+              <div class="text-base text-gray-600">ዋና ተግባራት</div>
+            </a>
+            <a href="#prosecutor" class="bg-red-100 hover:bg-red-200 p-6 rounded-2xl shadow-sm transition">
+              <div class="text-4xl font-bold text-red-800">${filterByRole('ዐቃቤ ሕግ').length}</div>
+              <div class="text-lg mt-2">⚖️ ዐቃቤ ሕግ</div>
+              <div class="text-base text-gray-600">ዋና ተግባራት</div>
+            </a>
+          </div>
+        </div>
+      `;
+    }
+
+    // Routing
+    const contentDiv = document.getElementById('page-content');
+    function updatePage() {
+      const hash = window.location.hash.substring(1) || 'home';
+      if (hash === 'head') {
+        contentDiv.innerHTML = renderRolePage('ሀላፊ', 'ሀላፊ (Head)', 'text-blue-300 bg-blue-900');
+      } else if (hash === 'teamlead') {
+        contentDiv.innerHTML = renderRolePage('ቡድን መሪ', 'ቡድን መሪ (Team Lead)', 'text-green-300 bg-green-900');
+      } else if (hash === 'prosecutor') {
+        contentDiv.innerHTML = renderRolePage('ዐቃቤ ሕግ', 'ዐቃቤ ሕግ (Prosecutor)', 'text-red-300 bg-red-900');
+      } else {
+        contentDiv.innerHTML = renderHome();
+      }
+      // Active nav
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('nav-active'));
+      const active = document.querySelector(`a[href="#${hash}"]`);
+      if (active) active.classList.add('nav-active');
+    }
+
+    window.addEventListener('hashchange', updatePage);
+    window.addEventListener('DOMContentLoaded', () => {
+      if (!window.location.hash || window.location.hash === '#') window.location.hash = 'home';
+      updatePage();
+    });
+  })();
+</script>
+</body>
+</html>
