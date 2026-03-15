@@ -12,7 +12,7 @@ const server = http.createServer((req, res) => {
   let pathname = decodeURIComponent(requestUrl.pathname);
 
   if (pathname === '/') {
-    pathname = '/deepseek_html_20260314_ea97b6.html';
+    pathname = '/beyayaya.html';
   }
 
   // Remove leading slash so path.join does not treat it as an absolute path on Windows
